@@ -92,7 +92,6 @@ public class ConnectionDatabase {
             list.add(user);
         }
         return list;
-        return null;
     }
 
 

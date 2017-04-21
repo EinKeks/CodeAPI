@@ -1,12 +1,11 @@
 package com.josef.codeapi;
 
-
-
-
 import com.josef.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.boot.autoconfigure.web.ErrorController;
+
+import java.sql.SQLException;
 
 @RestController
 public class ModelController implements ErrorController {
@@ -19,7 +18,7 @@ public class ModelController implements ErrorController {
 
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JsonLogin login(@RequestParam(value="mail") String mail,@RequestParam(value="password") String password) {
+    public JsonLogin login(@RequestParam(value="mail") String mail, @RequestParam(value="password") String password) {
         JsonLogin jsonLogin = new JsonLogin();
         User user = userRepo.findByMail(mail);
 
@@ -46,47 +45,22 @@ public class ModelController implements ErrorController {
     }
 
     @RequestMapping(value = "/skills", method = RequestMethod.GET)
-    public JsonCands skills(@RequestParam(value="userID") int userID) {
-
+    public JsonCands skills(@RequestParam(value="userID") int userID) throws SQLException {
         return new JsonCands(userID);
-
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public JsonSearch search(@RequestParam(value="skills") String[] skills) {
-
-
-
-        return new JsonSearch();
-
-    }
+    /*@RequestMapping(value = "/user", method = RequestMethod.POST)
+    public JsonSearch user(@RequestParam(value="skills") String[] skills) {
+        return new JsonUser();
+    }*/
 
     @RequestMapping(value = ERRORPATH)
     public String error() {
         return "Error handling";
     }
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-    @Override
     public String getErrorPath() {
         return ERRORPATH;
     }
->>>>>>> 68c9495c9e779fab63421915719a5a1c7733cdea
+
 }
