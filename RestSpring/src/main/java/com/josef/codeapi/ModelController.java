@@ -41,9 +41,14 @@ public class ModelController implements ErrorController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public JsonSearch search(@RequestParam(value="skills") String[] skills) {
 
-
-
         return new JsonSearch();
+
+    }
+
+    @RequestMapping(value = "/skills", method = RequestMethod.GET)
+    public JsonCands skills(@RequestParam(value="userID") int userID) {
+
+        return new JsonCands(userID);
 
     }
 

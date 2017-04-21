@@ -23,7 +23,7 @@ public class ConnectionDatabase {
     private Connection connection;
     private Statement statement;
 
-    ConnectionDatabase() {
+    public ConnectionDatabase() {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -40,13 +40,31 @@ public class ConnectionDatabase {
         }
     }
 
+    public List<Skill> cands(int userID) throws SQLException {
+        statement = connection.createStatement();
+
+        ResultSet rs = statement.executeQuery("SELECT c_s.ID, c_s.name, c_s.description, nm_user_cs.level, c_s.parentID FROM user JOIN nm_user_cs ON user.ID = nm_user_cs.userID JOIN c_s ON nm_user_cs.csID = c_s.ID WHERE id = " + userID);
+
+        List<Skill> skills = new ArrayList<Skill>();
+        while (rs.next()) {
+            Skill skill = new Skill();
+            skill.ID = rs.getInt("ID");
+            skill.name = rs.getString("name");
+            skill.description = rs.getString("description");
+            skill.level = rs.getInt("level");
+            skill.parentID = rs.getInt("parentID");
+            skills.add(skill);
+        }
+        return skills;
+    }
+
     public List<User> search(String[] skills) throws SQLException {
         // Statements allow to issue SQL queries to the database
         statement = connection.createStatement();
         // Result set get the result of the SQL query
-        String
+        // String
         for(int i = 0; i < skills.length; i++) {
-            String
+            // String
         }
             ResultSet rs = statement
                     .executeQuery("SELECT * FROM user JOIN nm_user_cs ON user.ID = nm_user_cs.userID JOIN c_s ON c_s.ID = nm_user_cs.csID WHERE c_s.name = 'Soft Skills'");
