@@ -5,19 +5,19 @@ package com.josef.codeapi;
 
 import com.josef.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 
 @RestController
-public class ModelController {
+public class ModelController implements ErrorController {
 
+
+    private static final String ERRORPATH = "/error";
 
     @Autowired
     private UserRepo userRepo;
 
-
+    @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public JsonLogin login(@RequestParam(value="mail") String mail,@RequestParam(value="password") String password) {
         JsonLogin jsonLogin = new JsonLogin();
@@ -32,20 +32,36 @@ public class ModelController {
         } else {
             jsonLogin.setSuccess(false);
         }
+
         return jsonLogin;
 
     }
 
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public JsonLogin search(@RequestParam(value="skills") String[] skills) {
+    public JsonSearch search(@RequestParam(value="skills") String[] skills) {
 
 
 
-        return new JsonLogin();
+        return new JsonSearch();
 
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public JsonSearch search(@RequestParam(value="skills") String[] skills) {
+
+
+
+        return new JsonSearch();
+
+    }
+
+    @RequestMapping(value = ERRORPATH)
+    public String error() {
+        return "Error handling";
+    }
+
+<<<<<<< HEAD
 
 
 
@@ -62,5 +78,10 @@ public class ModelController {
 
 
 
-
+=======
+    @Override
+    public String getErrorPath() {
+        return ERRORPATH;
+    }
+>>>>>>> 68c9495c9e779fab63421915719a5a1c7733cdea
 }
